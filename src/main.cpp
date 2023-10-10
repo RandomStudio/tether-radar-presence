@@ -167,6 +167,12 @@ void setup() {
 
 void loop() {
     int val = Sensor.readPresenceDetection();
+
+    if (!sensorOK) {
+        sensorOK = true;
+        sendStatus(true);
+    }
+
     if (val != lastPresence) {
         lastPresence = val;
         sendPresence(val);
