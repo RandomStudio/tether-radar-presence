@@ -14,6 +14,9 @@ DFRobot_Microwave_Radar_Module Sensor(/*hardSerial =*/&Serial1, /*rx =*/33, /*tx
 DFRobot_Microwave_Radar_Module Sensor(/*harxdSerial =*/&Serial1);
 #endif
 
+#define USE_TETHER 0
+#define USE_SERIAL 1
+
 // #define WLAN_SSID "tether_2.4"
 // #define WLAN_PASS "sp_ceB0ss!"
 #define WLAN_SSID "Random Guest"
@@ -129,6 +132,7 @@ void setup() {
 
     pinMode(LED_PIN, OUTPUT);
 
+#if USE_TETHER == 1
     connectWiFi();
 
     String id = WiFi.macAddress();
@@ -136,6 +140,7 @@ void setup() {
 
     delay(1000);
     MQTT_connect();
+#endif
 
     /**
        @brief Restore factory settings
@@ -161,8 +166,9 @@ void setup() {
        @brief Configure output control signal interface polarity
     */
     Sensor.setGpioMode(1);
-
+#if USE_SERIAL == 0  // only print debugging messages if we are NOT using Serial for output
     Serial.println("...Config done");
+#endif
 }
 
 void loop() {
@@ -170,14 +176,22 @@ void loop() {
 
     if (!sensorOK) {
         sensorOK = true;
+#if USE_TETHER == 1
         sendStatus(true);
+#elif USE_SERIAL == 1
+        Serial.println(val);
+#endif
     }
 
     if (val != lastPresence) {
         lastPresence = val;
+#if USE_TETHER == 1
         sendPresence(val);
+#elif USE_SERIAL == 1
+        Serial.println(val);
+#endif
     }
     // int val = 0;
     digitalWrite(LED_PIN, val);
-    Serial.println(val);
+    // Serial.println(val);
 }
