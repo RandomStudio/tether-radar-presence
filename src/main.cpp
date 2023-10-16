@@ -3,6 +3,7 @@
 #include <WiFi.h>
 
 #include "DFRobot_Microwave_Radar_Module.h"
+#include "settings.h"
 
 #if (defined(ARDUINO_AVR_UNO) || defined(ESP8266))  // Use soft serial port
 SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
@@ -14,20 +15,6 @@ DFRobot_Microwave_Radar_Module Sensor(/*hardSerial =*/&Serial1, /*rx =*/33, /*tx
 DFRobot_Microwave_Radar_Module Sensor(/*harxdSerial =*/&Serial1);
 #endif
 
-#define USE_TETHER 0
-#define USE_SERIAL 1
-
-// #define WLAN_SSID "tether_2.4"
-// #define WLAN_PASS "sp_ceB0ss!"
-#define WLAN_SSID "Random Guest"
-#define WLAN_PASS "beourguest"
-
-#define MQTT_IP "10.112.20.165"
-#define MQTT_PORT 1883
-#define MQTT_USER "tether"
-#define MQTT_PASS "sp_ceB0ss!"
-
-#define AGENT_ROLE "dfrobotSEN0521"
 #define LED_PIN 13
 
 WiFiClient wifiClient;
@@ -150,17 +137,17 @@ void setup() {
     /**
        @brief Configure detection distance, 0~11m, the default is 6m
     */
-    Sensor.detRangeCfg(3);
+    Sensor.detRangeCfg(SENSOR_RANGE);
 
     /**
        @brief Configure detection sensitivity, 0~9, the larger the value, the higher the sensitivity, default to be 7
     */
-    Sensor.setSensitivity(3);
+    Sensor.setSensitivity(SENSOR_SENSITIVITY);
 
     /**
        @brief Configure output delay time
     */
-    Sensor.outputLatency(0, 1);
+    Sensor.outputLatency(SENSOR_DELAY_ON, SENSOR_DELAY_OFF);
 
     /**
        @brief Configure output control signal interface polarity
