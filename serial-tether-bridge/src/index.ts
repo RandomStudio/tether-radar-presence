@@ -19,19 +19,16 @@ logger.info("started with config", config);
 
 const sendTetherMessage = async (output: Output, presence: boolean) => {
   const m = encode(presence);
-  await output.publish(m);
+  await output.publish(m, { qos: 2, retain: true });
 };
 
 const main = async () => {
-  const agent = await TetherAgent.create("PresenceRadarBridge", {
+  const agent = await TetherAgent.create(config.tetherRole, {
     ...config.tether,
   });
   const output = agent.createOutput("presence");
 
-  const port = new SerialPort({
-    path: "/dev/tty.usbserial-022F04E1",
-    baudRate: 115200,
-  });
+  const port = new SerialPort({ ...config.serial });
   const parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
   parser.on("data", async (chunk: string) => {
