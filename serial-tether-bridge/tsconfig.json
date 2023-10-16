@@ -1,0 +1,12 @@
+{
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "dist",
+    "declaration": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": []
+}

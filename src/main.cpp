@@ -115,7 +115,9 @@ void setup() {
         Serial.println("Communication with device failed, please check connection");
         delay(3000);
     }
+#if USE_SERIAL == 0
     Serial.println("START (wait for config done; this can take up to a minute!)");
+#endif
 
     pinMode(LED_PIN, OUTPUT);
 
