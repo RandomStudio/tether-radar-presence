@@ -1,5 +1,7 @@
 import { SerialPort } from "serialport";
 import { ReadlineParser } from "@serialport/parser-readline";
+import { Output, TetherAgent } from "tether-agent";
+import { encode } from "@msgpack/msgpack";
 
 import defaults from "./defaults";
 import parse from "parse-strings-in-object";
@@ -15,29 +17,40 @@ logger.level = config.loglevel;
 
 logger.info("started with config", config);
 
-const handleData = (chunk: string) => {
-  switch (chunk) {
-    case "1": {
-      logger.info("presence => TRUE");
-      break;
-    }
-    case "0": {
-      logger.info("presence => FALSE");
-      break;
-    }
-    default: {
-      logger.warn(`input unknown: "${chunk}"`);
-    }
-  }
+const sendTetherMessage = async (output: Output, presence: boolean) => {
+  const m = encode(presence);
+  await output.publish(m);
 };
 
 const main = async () => {
+  const agent = await TetherAgent.create("PresenceRadarBridge", {
+    ...config.tether,
+  });
+  const output = agent.createOutput("presence");
+
   const port = new SerialPort({
     path: "/dev/tty.usbserial-022F04E1",
     baudRate: 115200,
   });
   const parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
-  parser.on("data", handleData);
+
+  parser.on("data", async (chunk: string) => {
+    switch (chunk) {
+      case "1": {
+        logger.info("presence => TRUE");
+        sendTetherMessage(output, true);
+        break;
+      }
+      case "0": {
+        logger.info("presence => FALSE");
+        sendTetherMessage(output, false);
+        break;
+      }
+      default: {
+        logger.warn(`input unknown: "${chunk}"`);
+      }
+    }
+  });
 };
 
 // ================================================

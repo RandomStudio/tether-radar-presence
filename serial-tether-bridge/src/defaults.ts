@@ -1,6 +1,8 @@
 const defaults = {
-  foo: "bar",
   loglevel: "info",
+  tether: {
+    host: "localhost",
+  },
 };
 
 export default defaults;

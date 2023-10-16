@@ -13,10 +13,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@msgpack/msgpack": "^3.0.0-beta2",
     "log4js": "^6.3.0",
     "parse-strings-in-object": "^1.6.0",
     "rc": "^1.2.8",
-    "serialport": "^12.0.0"
+    "serialport": "^12.0.0",
+    "tether-agent": "^2.7.2"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
