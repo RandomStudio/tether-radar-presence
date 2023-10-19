@@ -1,31 +1,7 @@
-## What's in the box
+## Serial-Tether bridge for Presence Radar
 
-- [Typescript](https://www.typescriptlang.org/): tame the javascript
-- [Prettier](https://prettier.io/): stop fiddling with style
-- [rc](https://www.npmjs.com/package/rc) + [parse-strings-in-object](https://github.com/anselanza/parse-strings-in-object): make config predictable
-- [log4js](https://www.npmjs.com/package/log4js): timestamped logs with log levels
-
-## Get started
-
-Make a new template from the repo:
-
+Typically, you only need to customise the USB serial path, e.g.:
 ```
-npx degit https://github.com/anselanza/nodejs-template#main my-new-project
-```
+node dist/index.js --serial.path=/dev/tty.usbserial-022F04E1
+``
 
-Install the stuff
-
-```
-npm i
-```
-
-This also runs `postinstall` which will do the following:
-
-- Compile everything `npm run build`
-- Initialise a new git repo `git init`
-
-Tidy up (might automate this soon):
-
-- Please modify the package name, etc. in `package.json`!
-- In `src/index.ts`, you should set `appName` to something more relevant
-- Modify `README.md` for your project
