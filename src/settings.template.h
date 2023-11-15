@@ -8,7 +8,7 @@
 // This is NOT related to SENSOR_RANGE above. Higher values will
 // make small movements within the range more likely to trigger
 // presence = true.
-#define SENSOR_SENSITIVITY 10
+#define SENSOR_SENSITIVITY 5
 
 // Time in seconds (integer) to delay confirming ON (positive, presence)
 // and OFF (negative, no presence). 0,1 provides fast-as-possible "positive"
