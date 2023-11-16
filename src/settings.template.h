@@ -2,13 +2,13 @@
 #define USE_SERIAL 1
 
 // Detection distance in metres (integer), 0~11m; default 6m
-#define SENSOR_RANGE 3
+#define SENSOR_RANGE 2
 
 // Sensitivity value (integer), 0-9; default is 7
 // This is NOT related to SENSOR_RANGE above. Higher values will
 // make small movements within the range more likely to trigger
 // presence = true.
-#define SENSOR_SENSITIVITY 5
+#define SENSOR_SENSITIVITY 7
 
 // Time in seconds (integer) to delay confirming ON (positive, presence)
 // and OFF (negative, no presence). 0,1 provides fast-as-possible "positive"

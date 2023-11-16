@@ -168,7 +168,7 @@ void loop() {
 #if USE_TETHER == 1
         sendStatus(true);
 #elif USE_SERIAL == 1
-        Serial.println(val);
+        // Serial.println(val);
 #endif
     }
 
